@@ -2,4 +2,5 @@
 # Edit at your own risk.
 # <hostname>	<port>	<incl. subdomains>	<created>	<max-age>
 blog.csdn.net	0	0	1579596759	31536000
+github.com	0	1	1579601733	31536000
 www.zhihu.com	0	1	1579596968	15552000
