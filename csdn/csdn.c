@@ -65,7 +65,7 @@ re:
 	memset(cmd, 0, sizeof(cmd));
 	
 	for (i = 0;i < speed;i++);
-		goto re;
+	goto re;
 	
 	return 0;
 }
