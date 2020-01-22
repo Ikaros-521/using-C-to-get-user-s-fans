@@ -1,5 +1,8 @@
 ## 思路源自
 	[bilibili](https://www.bilibili.com/video/av84354171)
+	
+## 支持网站
+	CSDN，知乎，博客园，码云，GitHub
 
 ## 编译
 	gcc csdn.c -o csdn

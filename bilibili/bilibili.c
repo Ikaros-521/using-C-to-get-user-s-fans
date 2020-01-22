@@ -5,10 +5,10 @@
 
 int main()
 {
-	char id[80] = {};
-	// 输入用户的主页ID
-	printf("Please enter the homepage ID of the user: ");
-	scanf("%40s", id);
+	char id[20] = {};
+	// 输入用户的UID
+	printf("Please enter the UID of the user: ");
+	scanf("%20s", id);
 	double speed = 1;
 	// 循环间隔(s)
 	printf("Please enter the display cycle interval(s): ");
@@ -19,10 +19,12 @@ int main()
 	char *buf = malloc(4096);
 	char fans[10] = {};
 	int i = 0;
+	char filename[40] = {};
+	sprintf(filename ,"stat@vmid=%s", id);
 re:	
-	sprintf(cmd ,"..\\wget.exe -q https://www.cnblogs.com/%s/ajax/news.aspx", id);
+	sprintf(cmd ,"..\\wget.exe -q https://api.bilibili.com/x/relation/stat?vmid=%s", id);
 	system(cmd);
-	fp = fopen("news.aspx", "r");
+	fp = fopen(filename, "r");
 	if (fp == NULL)
 	{
 		printf("File access error! press any key to exit \n");
@@ -40,9 +42,16 @@ re:
 			memset(buf, 0, sizeof(buf));
 			continue;
 		}
-		memset(buf, 0, sizeof(buf));
-		fscanf(fp, "%s", buf);
-		sprintf(fans, "%s", buf);
+		temp += 10;
+		while(1)
+		{
+			if(temp[i] == '}' || temp[i] == '\0' || temp[i] == '\n')
+			{
+				break;
+			}
+			fans[i] = temp[i];
+			i++;
+		}
 		printf("%s's number of fans is:%s\n", id, fans);
 		memset(buf, 0, sizeof(buf));
 		memset(fans, 0, sizeof(fans));
@@ -52,7 +61,7 @@ re:
 	fclose(fp);
 	fp = NULL;
 	memset(cmd, 0, sizeof(cmd));
-	sprintf(cmd, "del news.aspx");
+	sprintf(cmd, "del \"%s\"", filename);
 	system(cmd);
 	memset(cmd, 0, sizeof(cmd));
 	
