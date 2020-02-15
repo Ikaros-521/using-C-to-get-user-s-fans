@@ -92,7 +92,7 @@ void bilibili(char* str)
 			fans[i] = temp[i];
 			i++;
 		}
-		printf("bilibili: %s's number of fans is:%s\n", id, fans);
+		printf("bilibili:%s\n", fans);
 		memset(buf, 0, sizeof(buf));
 		memset(fans, 0, sizeof(fans));
 		temp = NULL;
@@ -140,7 +140,7 @@ void cnblogs(char* str)
 		memset(buf, 0, sizeof(buf));
 		fscanf(fp, "%s", buf);
 		sprintf(fans, "%s", buf);
-		printf("cnblogs: %s's number of fans is:%s\n", id, fans);
+		printf("cnblogs :%s\n", fans);
 		memset(buf, 0, sizeof(buf));
 		memset(fans, 0, sizeof(fans));
 		temp = NULL;
@@ -196,7 +196,7 @@ void csdn(char* str)
 			fans[i] = temp[i];
 			i++;
 		}
-		printf("CSDN: %s's number of fans is:%s\n", id, fans);
+		printf("CSDN    :%s\n", fans);
 		memset(buf, 0, sizeof(buf));
 		memset(fans, 0, sizeof(fans));
 		temp = NULL;
@@ -260,7 +260,7 @@ void gitee(char* str)
 			fans[i] = temp[i];
 			i++;
 		}
-		printf("gitee: %s's number of fans is:%s\n", id, fans);
+		printf("gitee   :%s\n", fans);
 		memset(buf, 0, sizeof(buf));
 		memset(fans, 0, sizeof(fans));
 		temp = NULL;
@@ -320,7 +320,7 @@ void github(char* str)
 		memset(buf, 0, sizeof(buf));
 		fscanf(fp, "%s", buf);
 		sprintf(fans, "%s", buf);
-		printf("GitHub: %s's number of fans is:%s\n", id, fans);
+		printf("GitHub  :%s\n", fans);
 		memset(buf, 0, sizeof(buf));
 		memset(fans, 0, sizeof(fans));
 		temp = NULL;
@@ -383,7 +383,7 @@ void zhihu(char* str)
 			fans[i] = temp[i];
 			i++;
 		}
-		printf("zhihu: %s's number of fans is:%s\n", id, fans);
+		printf("zhihu   :%s\n", fans);
 		memset(buf, 0, sizeof(buf));
 		memset(fans, 0, sizeof(fans));
 		temp = NULL;
