@@ -1,3 +1,6 @@
+## 视频讲解
+[bilibili](https://www.bilibili.com/video/av84557418)
+
 ## 思路源自
 [bilibili](https://www.bilibili.com/video/av84354171)
 	
