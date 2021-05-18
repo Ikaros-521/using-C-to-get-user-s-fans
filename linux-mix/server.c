@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
-#include <windows.h>
+#include "getch.h"
 
 void bilibili(char* str);	// 哔哩哔哩
 void cnblogs(char* str);	// 博客园
@@ -42,9 +41,9 @@ re:
 	zhihu(id_zhihu);		// 知乎
 	
 	// 睡眠耗时
-	Sleep(1000 * speed);
+	sleep((int)speed);
 	// 清屏
-	system("cls");
+	system("clear");
 	goto re;
 	
 	return 0;
@@ -62,7 +61,7 @@ void bilibili(char* str)
 	int i = 0;
 	strcpy(id, str);
 	
-	sprintf(cmd ,"..\\wget.exe -q https://api.bilibili.com/x/relation/stat?vmid=%s -O bilibili.txt", id);
+	sprintf(cmd ,"wget -q https://api.bilibili.com/x/relation/stat?vmid=%s -O bilibili.txt", id);
 	system(cmd);
 	fp = fopen("bilibili.txt", "r");
 	if (fp == NULL)
@@ -75,11 +74,7 @@ void bilibili(char* str)
 	i = 0;
 	while(1)
 	{
-		int size = fscanf(fp, "%s", buf);
-		if(size <= 0)
-		{
-			return;
-		}
+		fscanf(fp, "%s", buf);
 		char *temp = strstr(buf, "follower");
 		if(temp == NULL)
 		{
@@ -105,7 +100,7 @@ void bilibili(char* str)
 	fclose(fp);
 	fp = NULL;
 	memset(cmd, 0, sizeof(cmd));
-	sprintf(cmd, "del \"bilibili.txt\"");
+	sprintf(cmd, "rm -rf \"bilibili.txt\"");
 	system(cmd);
 	memset(cmd, 0, sizeof(cmd));
 }
@@ -121,7 +116,7 @@ void cnblogs(char* str)
 	int i = 0;
 	strcpy(id, str);
 	
-	sprintf(cmd ,"..\\wget.exe -q https://www.cnblogs.com/%s/ajax/news.aspx -O cnblogs.txt", id);
+	sprintf(cmd ,"wget -q https://www.cnblogs.com/%s/ajax/news.aspx -O cnblogs.txt", id);
 	system(cmd);
 	fp = fopen("cnblogs.txt", "r");
 	if (fp == NULL)
@@ -134,11 +129,7 @@ void cnblogs(char* str)
 	i = 0;
 	while(1)
 	{
-		int size = fscanf(fp, "%s", buf);
-		if(size <= 0)
-		{
-			return;
-		}
+		fscanf(fp, "%s", buf);
 		char *temp = strstr(buf, "follower");
 		if(temp == NULL)
 		{
@@ -157,7 +148,7 @@ void cnblogs(char* str)
 	fclose(fp);
 	fp = NULL;
 	memset(cmd, 0, sizeof(cmd));
-	sprintf(cmd, "del cnblogs.txt");
+	sprintf(cmd, "rm -rf cnblogs.txt");
 	system(cmd);
 	memset(cmd, 0, sizeof(cmd));
 }
@@ -174,13 +165,12 @@ void csdn(char* str)
 	int i = 0;
 	strcpy(id, str);
 	
-	sprintf(cmd ,"..\\wget.exe -q https://blog.csdn.net/%s -O csdn.txt", id);
-	system(cmd);
-	
-	fp = _popen("type csdn.txt | findstr user-profile-statistics-num 2>null", "r");
+	sprintf(cmd ,"wget -q https://blog.csdn.net/%s -O csdn.txt", id);
+	system(cmd);	
+	fp = popen("cat csdn.txt | grep user-profile-statistics-num", "r");
 	if (fp == NULL)
 	{
-		printf("File access error! press any key to exit \n");
+		printf("File csdn.txt access error! press any key to exit \n");
 		getch();
 		exit(0);
 	}
@@ -237,10 +227,10 @@ void csdn(char* str)
 		temp = NULL;
 		break;
 	}
-	_pclose(fp);
+	pclose(fp);
 	fp = NULL;
 	memset(cmd, 0, sizeof(cmd));
-	sprintf(cmd, "del csdn.txt");
+	sprintf(cmd, "rm -rf csdn.txt");
 	system(cmd);
 	memset(cmd, 0, sizeof(cmd));
 }
@@ -257,7 +247,7 @@ void gitee(char* str)
 	int flag = 0;
 	strcpy(id, str);
 	
-	sprintf(cmd ,"..\\wget.exe -q https://gitee.com/%s/followers -O gitee.txt", id);
+	sprintf(cmd ,"wget -q https://gitee.com/%s/followers -O gitee.txt", id);
 	system(cmd);
 	
 	fp = fopen("gitee.txt", "r");
@@ -272,11 +262,7 @@ void gitee(char* str)
 	flag = 0;
 	while(1)
 	{
-		int size = fscanf(fp, "%s", buf);
-		if(size <= 0)
-		{
-			return;
-		}
+		fscanf(fp, "%s", buf);
 		char *temp = strstr(buf, "social-count");
 		if(temp == NULL)
 		{
@@ -308,7 +294,7 @@ void gitee(char* str)
 	fclose(fp);
 	fp = NULL;
 	memset(cmd, 0, sizeof(cmd));
-	sprintf(cmd, "del gitee.txt");
+	sprintf(cmd, "rm -rf gitee.txt");
 	system(cmd);
 	memset(cmd, 0, sizeof(cmd));
 }
@@ -325,7 +311,7 @@ void github(char* str)
 	int flag = 0;
 	strcpy(id, str);
 	
-	sprintf(cmd ,"..\\wget.exe -q  https://github.com/%s -O github.txt", id);
+	sprintf(cmd ,"wget -q  https://github.com/%s -O github.txt", id);
 	system(cmd);
 	
 	fp = fopen("github.txt", "r");
@@ -340,11 +326,7 @@ void github(char* str)
 	flag = 0;
 	while(1)
 	{
-		int size = fscanf(fp, "%s", buf);
-		if(size <= 0)
-		{
-			return;
-		}
+		fscanf(fp, "%s", buf);
 		
 		char *temp = strstr(buf, "hide-sm");
 		if(temp == NULL)
@@ -372,7 +354,7 @@ void github(char* str)
 	fclose(fp);
 	fp = NULL;
 	memset(cmd, 0, sizeof(cmd));
-	sprintf(cmd, "del github.txt");
+	sprintf(cmd, "rm -rf github.txt");
 	system(cmd);
 	memset(cmd, 0, sizeof(cmd));
 }
@@ -389,7 +371,7 @@ void zhihu(char* str)
 	int flag = 0;
 	strcpy(id, str);
 	
-	sprintf(cmd ,"..\\wget.exe -q https://www.zhihu.com/people/%s -O zhihu.txt", id);
+	sprintf(cmd ,"wget -q https://www.zhihu.com/people/%s -O zhihu.txt", id);
 	system(cmd);
 	fp = fopen("zhihu.txt", "r");
 	if (fp == NULL)
@@ -403,11 +385,7 @@ void zhihu(char* str)
 	i = 0;
 	while(1)
 	{
-		int size = fscanf(fp, "%s", buf);
-		if(size <= 0)
-		{
-			return;
-		}
+		fscanf(fp, "%s", buf);
 		char *temp = strstr(buf, "title=\"");
 		if(temp == NULL)
 		{
@@ -439,7 +417,8 @@ void zhihu(char* str)
 	fclose(fp);
 	fp = NULL;
 	memset(cmd, 0, sizeof(cmd));
-	sprintf(cmd, "del zhihu.txt");
+	sprintf(cmd, "rm -rf zhihu.txt");
 	system(cmd);
 	memset(cmd, 0, sizeof(cmd));
 }
+

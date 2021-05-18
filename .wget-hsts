@@ -1,7 +1,8 @@
 # HSTS 1.0 Known Hosts database for GNU Wget.
 # Edit at your own risk.
 # <hostname>	<port>	<incl. subdomains>	<created>	<max-age>
+github.com	0	1	1579672711	31536000
 weibo.com	0	0	1579603242	31536000
 blog.csdn.net	0	0	1581749378	31536000
-github.com	0	1	1579672711	31536000
-www.zhihu.com	0	1	1581749380	15552000
+www.cnblogs.com	0	1	1621321916	2592000
+www.zhihu.com	0	1	1621321920	15552000

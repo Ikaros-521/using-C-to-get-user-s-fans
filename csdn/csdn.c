@@ -17,13 +17,14 @@ int main()
 	char cmd[100] = {};
 	FILE* fp = NULL;
 	char *buf = malloc(4096);
+	char *temp = NULL;
 	char fans[10] = {};
 	int i = 0;
 re:	
 	sprintf(cmd ,"..\\wget.exe -q https://blog.csdn.net/%s", id);
 	system(cmd);
 	
-	fp = fopen(id, "r");
+	fp = _popen("type csdn.txt | findstr user-profile-statistics-num 2>null", "r");
 	if (fp == NULL)
 	{
 		printf("File access error! press any key to exit \n");
@@ -34,14 +35,40 @@ re:
 	i = 0;
 	while(1)
 	{
-		fscanf(fp, "%s", buf);
-		char *temp = strstr(buf, "id=\"fan\">");
+		int size = fread(buf, 1, 4096, fp);
+		if(size <= 0)
+		{
+			printf("CSDN error!\n");
+			return;
+		}
+		temp = strstr(buf, "user-profile-statistics-num");
 		if(temp == NULL)
 		{
-			memset(buf, 0, sizeof(buf));
-			continue;
+			printf("CSDN error!\n");
+			return;
 		}
-		temp += 9;
+		temp += 45;
+		temp = strstr(temp, "user-profile-statistics-num");
+		if(temp == NULL)
+		{
+			printf("CSDN error!\n");
+			return;
+		}
+		temp += 45;
+		temp = strstr(temp, "user-profile-statistics-num");
+		if(temp == NULL)
+		{
+			printf("CSDN error!\n");
+			return;
+		}
+		temp += 45;
+		temp = strstr(temp, "user-profile-statistics-num");
+		if(temp == NULL)
+		{
+			printf("CSDN error!\n");
+			return;
+		}
+		temp += 45;
 		while(1)
 		{
 			if(temp[i] == '<' || temp[i] == '\0' || temp[i] == '\n')
@@ -51,13 +78,13 @@ re:
 			fans[i] = temp[i];
 			i++;
 		}
-		printf("%s's number of fans is:%s\n", id, fans);
+		printf("CSDN    :%s\n", fans);
 		memset(buf, 0, sizeof(buf));
 		memset(fans, 0, sizeof(fans));
 		temp = NULL;
 		break;
 	}
-	fclose(fp);
+	_pclose(fp);
 	fp = NULL;
 	memset(cmd, 0, sizeof(cmd));
 	sprintf(cmd, "del %s", id);
